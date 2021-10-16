@@ -28,4 +28,13 @@ class maker extends Model
         */
         
     ];
+
+
+    public function posts()
+    {
+        return $this->hasMany('App\Models\post');
+    }
+
+
+
 }
