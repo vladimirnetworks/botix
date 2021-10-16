@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Target;
 use App\Models\urlpattern;
+use App\Models\maker;
 
 use Illuminate\Http\Request;
 
@@ -52,6 +53,95 @@ class TargetController extends Controller
             return ["data" => null];
         }
     }
+
+
+
+
+
+    function viewmakers(Request $request)
+    {
+
+
+        $tari = Target::find($request->target_id);
+
+
+        if (isset($tari->urlpatterns)) {
+            return ["data" => $tari->makers];
+        } else {
+            return ["data" => null];
+        }
+    }
+
+    function addnewmaker(Request $request)
+    {
+
+
+        /* $tar = Target::create([
+            'title' => $request['title'], 'url' => $request['url'],
+        ]);
+        */
+
+        /*
+ 'target_id',
+        'active',
+        'urlpattern',
+        'htmlpattern',
+        'maker', /*
+*/
+
+        $pat = maker::create([
+            'target_id' => $request->target_id,
+            'urlpattern' => $request->urlpattern,
+            'htmlpattern' => $request->htmlpattern,
+            'maker' => $request->maker
+        ]);
+
+        return ["data" => $pat];
+    }
+
+
+
+    function editmaker(Request $request)
+    {
+
+
+        /* $tar = Target::create([
+            'title' => $request['title'], 'url' => $request['url'],
+        ]);
+        */
+
+
+        $makoo = maker::find($request->id);
+
+        $makoo->urlpattern = $request->urlpattern;
+        $makoo->htmlpattern = $request->htmlpattern;
+        $makoo->maker = $request->maker;
+        $makoo->active = $request->active;
+        // $targ->url = $request->url;
+        // $targ->save();
+
+
+        // return ["data" => $targ->save()];
+
+
+        return ["data" => $makoo->save()];
+    }
+
+
+
+    public function deletemaker(Request $request)
+    {
+        //
+        $paz = maker::find($request->id);
+
+
+        // $targ->save();
+
+
+        return ["data" => $paz->delete()];
+    }
+
+
 
 
     function addnewpattern(Request $request)

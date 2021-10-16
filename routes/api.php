@@ -81,8 +81,24 @@ Route::prefix("target")->group(function () {
         Route::post('/edit', 'App\Http\Controllers\TargetController@editpattern');
         Route::post('/delete', 'App\Http\Controllers\TargetController@deletepattern');
     });
+
+
+
+    Route::prefix('/{target_id}/makers')->group(function () {
+
+        Route::get('/', 'App\Http\Controllers\TargetController@viewmakers');
+        Route::post('/addnew', 'App\Http\Controllers\TargetController@addnewmaker');
+        Route::post('/edit', 'App\Http\Controllers\TargetController@editmaker');
+        Route::post('/delete', 'App\Http\Controllers\TargetController@deletemaker');
+    });
+
+
+
+    
 });
 
 
 
 Route::get('/crawl', 'App\Http\Controllers\crawlController@crawl');
+
+Route::get('/make', 'App\Http\Controllers\crawlController@make');

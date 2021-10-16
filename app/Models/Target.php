@@ -25,5 +25,11 @@ class Target extends Model
     {
         return $this->hasMany('App\Models\page');
     }
+
+
+    public function makers()
+    {
+        return $this->hasMany('App\Models\maker');
+    }
     
 }

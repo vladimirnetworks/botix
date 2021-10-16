@@ -15,9 +15,18 @@ use DOMDocument;
 class crawlController extends Controller
 {
 
+
+    static function fixencode($inp)
+    {
+        return  preg_replace_callback("![^[:ascii:]]!", function ($i) {
+            return urlencode($i[0]);
+        }, $inp);
+    }
+
     static function gett($u, $headers = null, $ua = null)
     {
 
+        $u = crawlController::fixencode($u);
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $u);
@@ -224,5 +233,19 @@ class crawlController extends Controller
 
 
         return  $mpd;
+    }
+
+
+    public function make()
+    {
+
+        $html = "<title>aaaa</titl>";
+
+        $eval = 'preg_match_all("!<title>(.*)</titl>!isU",$html,$m);';
+        $eval .= '$ret=$m[0];';
+
+        eval($eval);
+        //$inp = '';
+        return $ret;
     }
 }
