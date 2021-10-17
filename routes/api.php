@@ -72,6 +72,12 @@ Route::prefix("targets")->group(function () {
 });
 
 
+
+
+
+
+
+
 Route::prefix("target")->group(function () {
 
     Route::prefix('/{target_id}/patterns')->group(function () {

@@ -253,6 +253,7 @@ class TargetController extends Controller
         $targ->title = $request->title;
         $targ->url = $request->url;
         $targ->active = $request->active;
+        $targ->makeractive = $request->makeractive;
         // $targ->save();
 
 

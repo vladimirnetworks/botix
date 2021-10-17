@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\maker_history;
 use App\Models\Target;
 use App\Models\urlpattern;
 use App\Models\page;
@@ -73,7 +74,7 @@ class crawlController extends Controller
     {
 
         date_default_timezone_set("Asia/Tehran");
-        $targ = Target::where('active', '=', 1)->orderBy('lastseen', 'asc')->first();
+        $targ = Target::has('urlpatterns')->where('active', '=', 1)->orderBy('lastseen', 'asc')->first();
 
         $targ->lastseen = date("Y-m-d H:i:s");
         $targ->save();
@@ -239,13 +240,55 @@ class crawlController extends Controller
     public function make()
     {
 
-        $html = "<title>aaaa</titl>";
+        date_default_timezone_set("Asia/Tehran");
+        $targ = Target::has('makers')->where('makeractive', '=', 1)->orderBy('makerlastseen', 'asc')->first();
 
-        $eval = 'preg_match_all("!<title>(.*)</titl>!isU",$html,$m);';
-        $eval .= '$ret=$m[0];';
+        $targ->makerlastseen = date("Y-m-d H:i:s");
+        $targ->save();
 
-        eval($eval);
-        //$inp = '';
-        return $ret;
+
+
+
+        $makers = $targ->makers->where('active', '=', 1);
+
+
+
+
+
+
+
+
+       // dd($pgg->url);
+
+        foreach ($makers as $hitmaker) {
+
+          
+            $q = "SELECT  *
+            FROM    pages p
+            WHERE  `html` is not null and   NOT EXISTS
+                    (
+                    SELECT  null 
+                    FROM    maker_history h
+                    WHERE   h.url = p.url and h.target_id = p.target_id and maker_id=".$hitmaker->id."
+                    )";
+    
+            $pgg = DB::select(DB::raw($q))[0];
+
+
+            maker_history::create([
+                'target_id' => $pgg->target_id,
+                 'maker_id' => $hitmaker->id,
+                 'url' => $pgg->url,
+            ]);
+
+
+            dd($pgg);
+
+
+        }
+
+
+
+        return null;
     }
 }
