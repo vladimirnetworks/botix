@@ -1,8 +1,11 @@
 <?php
-function fixencode($inp) {
-return  preg_replace_callback("![^[:ascii:]]!",function($i) {
-    return urlencode($i[0]);
-},$inp);
-
-
+function fixencode($inp)
+{
+    return  preg_replace_callback("![^[:ascii:]]!", function ($i) {
+        return urlencode($i[0]);
+    }, $inp);
 }
+
+$xx = " return 1;";
+
+echo eval($xx);

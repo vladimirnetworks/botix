@@ -6,6 +6,7 @@ use App\Models\maker_history;
 use App\Models\Target;
 use App\Models\urlpattern;
 use App\Models\page;
+use App\Models\post;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
@@ -258,33 +259,54 @@ class crawlController extends Controller
 
 
 
-       // dd($pgg->url);
+        // dd($pgg->url);
 
         foreach ($makers as $hitmaker) {
 
-          
+            $regexurl = '.*';
+            if ($hitmaker->urlpattern) {
+                $regexurl = $hitmaker->urlpattern;
+            }
+
+            $regexhtml = '.*';
+            if ($hitmaker->htmlpattern) {
+                $regexhtml = $hitmaker->htmlpattern;
+            }
+
+
             $q = "SELECT  *
             FROM    pages p
-            WHERE  `html` is not null and   NOT EXISTS
+            WHERE  `url` REGEXP '$regexurl' and `html` REGEXP '$regexhtml' and  p.`html` is not null and   NOT EXISTS
                     (
                     SELECT  null 
                     FROM    maker_history h
-                    WHERE   h.url = p.url and h.target_id = p.target_id and maker_id=".$hitmaker->id."
+                    WHERE   h.url = p.url and h.target_id = p.target_id and maker_id=" . $hitmaker->id . "
                     )";
-    
+
+                 
             $pgg = DB::select(DB::raw($q))[0];
+
+
+            //
+            $html = $pgg->html;
+            $res = eval($hitmaker->maker . ";");
+
+            post::create([
+                'target_id' => $pgg->target_id,
+                'maker_id' => $hitmaker->id,
+                'data' => json_encode($res),
+            ]);
+            //
 
 
             maker_history::create([
                 'target_id' => $pgg->target_id,
-                 'maker_id' => $hitmaker->id,
-                 'url' => $pgg->url,
+                'maker_id' => $hitmaker->id,
+                'url' => $pgg->url,
             ]);
 
 
             dd($pgg);
-
-
         }
 
 
