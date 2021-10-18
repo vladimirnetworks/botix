@@ -283,7 +283,7 @@ class crawlController extends Controller
                     WHERE   h.url = p.url and h.target_id = p.target_id and maker_id=" . $hitmaker->id . "
                     )";
 
-                 
+
             $pgg = DB::select(DB::raw($q))[0];
 
 
