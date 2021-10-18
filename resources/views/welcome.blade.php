@@ -11,7 +11,7 @@
     </head>
     <body>
 
-@livewire('target-comp')
+@livewire('paginated-target')
 @livewireScripts
 
     </body>
