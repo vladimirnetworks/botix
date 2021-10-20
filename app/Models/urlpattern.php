@@ -14,4 +14,11 @@ class urlpattern extends Model
         'type',
         'savepattern'
     ];
+
+
+    public function target()
+    {
+        return $this->belongsTo('App\Models\Target');
+    }
+
 }

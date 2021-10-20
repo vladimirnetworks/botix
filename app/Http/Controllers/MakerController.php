@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Target;
-use App\Models\urlpattern;
+use App\Models\maker;
 
-class UrlpatternController extends Controller
+class MakerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +15,9 @@ class UrlpatternController extends Controller
      */
     public function index(Target $target)
     {
-
-
-
-        if (isset($target->urlpatterns)) {
-            return ["data" => $target->urlpatterns];
+       
+        if (isset($target->makers)) {
+            return ["data" => $target->makers];
         } else {
             return ["data" => "null"];
         }
@@ -31,14 +29,13 @@ class UrlpatternController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request ,$target_id)
     {
-
-        $pat = urlpattern::create([
+        $pat = maker::create([
             'target_id' => $request->target_id,
-            'pattern' => $request->pattern,
-            'savepattern' => $request->savepattern,
-            'type' => $request->type
+            'urlpattern' => $request->urlpattern,
+            'htmlpattern' => $request->htmlpattern,
+            'maker' => $request->maker
         ]);
 
         return ["data" => $pat];
@@ -50,9 +47,9 @@ class UrlpatternController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Target $target, urlpattern $urlpattern)
+    public function show($id)
     {
-        return $urlpattern;
+        //
     }
 
     /**
@@ -62,33 +59,25 @@ class UrlpatternController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Target $target,   $urlpatternid)
+    public function update(Request $request, $target_id , $maker_id)
     {
+      
+        $makoo = maker::find($maker_id);
+
+        $makoo->urlpattern = $request->urlpattern;
+        $makoo->htmlpattern = $request->htmlpattern;
+        $makoo->maker = $request->maker;
+        $makoo->active = $request->active;
+        // $targ->url = $request->url;
+        // $targ->save();
 
 
+        // return ["data" => $targ->save()];
 
 
-        $patoo = urlpattern::find($urlpatternid);
+        return ["data" => $makoo->save()];
 
 
-
-
-
-        $patoo->pattern = $request->pattern;
-        $patoo->type = $request->type;
-        $patoo->savepattern = $request->savepattern;
-
-
-
-
-        return ["datax" => $patoo->save()];
-
-
-
-        //  $urlpattern->pattern = $request->pattern;
-
-
-        //  return $urlpattern-save();
     }
 
     /**
@@ -99,7 +88,7 @@ class UrlpatternController extends Controller
      */
     public function destroy($targetidm,$id)
     {
-        $pattx = urlpattern::find($id);
-        return ["data" => $pattx->delete()];
+        $mak = maker::find($id);
+        return ["data" => $mak->delete()];
     }
 }

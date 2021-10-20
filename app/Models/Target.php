@@ -19,6 +19,8 @@ class Target extends Model
     {
         return $this->hasMany('App\Models\urlpattern');
     }
+
+
     
 
     public function pages()

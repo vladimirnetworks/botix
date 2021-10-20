@@ -26,7 +26,7 @@ class SingleTarget extends Component
     public function updated()
     {
 
-        $this->loading = "...";
+
         sleep(2);
 
         $this->validate();
@@ -36,7 +36,7 @@ class SingleTarget extends Component
 
         session()->flash('message', 'Post successfully updated.');
 
-        $this->loading = "x";
+
 
     }
 
