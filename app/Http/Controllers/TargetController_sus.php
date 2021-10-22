@@ -8,7 +8,7 @@ use App\Models\maker;
 
 use Illuminate\Http\Request;
 
-class TargetController extends Controller
+class TargetController_sus extends Controller
 {
     /**
      * Display a listing of the resource.

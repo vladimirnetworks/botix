@@ -62,26 +62,26 @@ class UrlpatternController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Target $target,   $urlpatternid)
+    public function update(Request $request, Target $target,  urlpattern $pattern)
     {
 
 
 
 
-        $patoo = urlpattern::find($urlpatternid);
+        //$patoo = urlpattern::find($urlpatternid);
 
 
 
 
 
-        $patoo->pattern = $request->pattern;
-        $patoo->type = $request->type;
-        $patoo->savepattern = $request->savepattern;
+        $pattern->pattern = $request->pattern;
+        $pattern->type = $request->type;
+        $pattern->savepattern = $request->savepattern;
 
 
 
 
-        return ["datax" => $patoo->save()];
+        return ["datax" => $pattern->save()];
 
 
 
