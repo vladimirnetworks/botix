@@ -19,6 +19,12 @@ class crawlController extends Controller
 {
 
 
+    static function regexformysql($i)
+    {
+        preg_match('/!(.+)!.*/', $i, $m);
+        return $m[1];
+    }
+
     static function fixencode($inp)
     {
         return  preg_replace_callback("![^[:ascii:]]!", function ($i) {
@@ -92,7 +98,7 @@ class crawlController extends Controller
         foreach ($patts as $pat) {
 
             if ($pat->type == 1) {
-                $pages_get = DB::table('pages')->whereraw('target_id = ' . $targ->id . " and status = 0 and url REGEXP '" . $pat->pattern . "' ")->first();         
+                $pages_get = DB::table('pages')->whereraw('target_id = ' . $targ->id . " and status = 0 and url REGEXP '" . crawlController::regexformysql($pat->pattern) . "' ")->first();
                 if (isset($pages_get->id)) {
                     $pages = page::find($pages_get->id);
                     break;
@@ -106,7 +112,7 @@ class crawlController extends Controller
         } else {
             dd("not found");
         }
-      
+
 
 
         $this->runcrawl($targ, $pages);
@@ -334,15 +340,15 @@ class crawlController extends Controller
             $regexurl = '.*';
             if ($hitmaker->urlpattern) {
 
-                preg_match('/!(.+)!.*/', $hitmaker->urlpattern, $m);
-                $regexurl = $m[1];
+
+                $regexurl = crawlController::regexformysql($hitmaker->urlpattern);
             }
 
             $regexhtml = '.*';
             if ($hitmaker->htmlpattern) {
 
-                preg_match('/!(.+)!.*/', $hitmaker->htmlpattern, $m);
-                $regexhtml = $m[1];
+
+                $regexhtml = crawlController::regexformysql($hitmaker->htmlpattern);
             }
 
 
