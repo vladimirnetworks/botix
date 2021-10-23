@@ -33,12 +33,41 @@ class crawlController extends Controller
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $u);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+
+
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 7);
+
+
+
+
+        $userAgent =  \Campo\UserAgent::random(['os_type' => "Windows", 'device_type' => "Desktop"]);
+
+
+
+
+        if ($headers) {
+
+
+
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        }
+
+        #echo "req : ".$u;
+        #echo "\n";
+        #echo "ua : ".$userAgent;
+        #echo "\n";
+        if ($ua != null) {
+            $userAgent = $ua;
         }
 
         curl_setopt($ch, CURLOPT_USERAGENT, $userAgent);
         return curl_exec($ch);
     }
-
 
 
     public function crawl()
