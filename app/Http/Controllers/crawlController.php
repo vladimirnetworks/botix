@@ -79,16 +79,17 @@ class crawlController extends Controller
 
     public function crawlsavetest()
     {
-        $targ = Target::has('urlpatterns')->where('active', '=', 1)->orderBy('lastseen', 'asc')->first();
-        $pages = $targ->pages->where('status', '=', 0,'and','url', 'REGEXP', '^https:\/\/www\.2nafare\.com\/[a-zA-Z0-9%-]+\/$')->first();
-       dd($pages);
-        $this->runcrawl($targ,$pages);
+
+
+        $targ = Target::has('urlpatterns')->where('active', '=', 1)->orderBy('lastseen', 'asc')->first();      
+        $pages = DB::table('pages')->whereraw('target_id = ' . $targ->id . " and status = 0 and url REGEXP '" . '^https:\/\/www\.2nafare\.com\/[a-zA-Z0-9%-]+\/$' . "' ")->first();
+        $this->runcrawl($targ, $pages);
     }
 
 
-    
 
-    public function runcrawl($targ,$pages=null)
+
+    public function runcrawl($targ, $pages = null)
     {
 
 
@@ -101,7 +102,7 @@ class crawlController extends Controller
 
 
         if ($pages == null) {
-         $pages = $targ->pages->where('status', '=', 0)->first();
+            $pages = $targ->pages->where('status', '=', 0)->first();
         }
 
 
@@ -112,20 +113,19 @@ class crawlController extends Controller
         }
 
         if (!$url) {
-          
+
 
             $now = Carbon::now();
 
 
             DB::table('pages')->insertOrIgnore(
 
-                ['url' => $targ->url, 'target_id' => $targ->id
-                
-                ,
+                [
+                    'url' => $targ->url, 'target_id' => $targ->id,
 
-                "created_at" => $now,
-                "updated_at"=>$now,
-                
+                    "created_at" => $now,
+                    "updated_at" => $now,
+
                 ]
 
             );
@@ -260,10 +260,11 @@ class crawlController extends Controller
                 $now = Carbon::now();
                 DB::table('pages')->insertOrIgnore(
 
-                    ['url' => $hit_url, 'target_id' => $targ->id,
-                    
-                    "created_at" => $now,
-                    "updated_at"=>$now,
+                    [
+                        'url' => $hit_url, 'target_id' => $targ->id,
+
+                        "created_at" => $now,
+                        "updated_at" => $now,
 
                     ]
 
@@ -307,14 +308,14 @@ class crawlController extends Controller
             $regexurl = '.*';
             if ($hitmaker->urlpattern) {
 
-                preg_match('/!(.+)!.*/',$hitmaker->urlpattern,$m);
+                preg_match('/!(.+)!.*/', $hitmaker->urlpattern, $m);
                 $regexurl = $m[1];
             }
 
             $regexhtml = '.*';
             if ($hitmaker->htmlpattern) {
 
-                preg_match('/!(.+)!.*/',$hitmaker->htmlpattern,$m);
+                preg_match('/!(.+)!.*/', $hitmaker->htmlpattern, $m);
                 $regexhtml = $m[1];
             }
 
