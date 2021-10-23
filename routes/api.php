@@ -15,9 +15,15 @@ Route::apiResource('targets.makers', 'App\Http\Controllers\MakerController');
 Route::post('/insertlink/{target_id}', 'App\Http\Controllers\PageController@store');
 
 
+
+
 Route::get('/crawl', 'App\Http\Controllers\crawlController@crawl');
 Route::get('/make', 'App\Http\Controllers\crawlController@make');
 
+
+
+// test
+Route::get('/crawlsavetest', 'App\Http\Controllers\crawlController@crawlsavetest');
 
 
 

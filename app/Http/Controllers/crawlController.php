@@ -77,6 +77,13 @@ class crawlController extends Controller
     }
 
 
+    public function crawlsavetest()
+    {
+        $targ = Target::has('urlpatterns')->where('active', '=', 1)->orderBy('lastseen', 'asc')->first();
+        $pages = $targ->pages->where('status', '=', 0,'and','url', 'REGEXP', '^https:\/\/www\.2nafare\.com\/[a-zA-Z0-9%-]+\/$')->first();
+        $this->runcrawl($targ,$pages);
+    }
+
 
     
 
