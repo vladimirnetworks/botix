@@ -81,10 +81,29 @@ class crawlController extends Controller
     {
 
 
-        $targ = Target::has('urlpatterns')->where('active', '=', 1)->orderBy('lastseen', 'asc')->first();      
-        $pages_get = DB::table('pages')->whereraw('target_id = ' . $targ->id . " and status = 0 and url REGEXP '" . '^https:\/\/www\.2nafare\.com\/[a-zA-Z0-9%-]+\/$' . "' ")->first();
-        $pages = page::find($pages_get->id);
-       
+        $targ = Target::has('urlpatterns')->where('active', '=', 1)->orderBy('lastseen', 'asc')->first();
+
+
+        $patts = $targ->urlpatterns;
+
+
+        $saveisok = false;
+        $m = null;
+        foreach ($patts as $pat) {
+
+            if ($pat->type == 1) {
+                $pages_get = DB::table('pages')->whereraw('target_id = ' . $targ->id . " and status = 0 and url REGEXP '" . $pat->pattern . "' ")->first();
+                $pages = page::find($pages_get->id);
+                if (isset($pages_get->id)) {
+                    break;
+                }
+            }
+        }
+
+
+        dd($pages->url);
+
+
         $this->runcrawl($targ, $pages);
     }
 
