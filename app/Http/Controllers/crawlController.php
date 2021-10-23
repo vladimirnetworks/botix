@@ -33,36 +33,6 @@ class crawlController extends Controller
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $u);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-
-
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 7);
-
-
-
-
-        $userAgent =  \Campo\UserAgent::random(['os_type' => "Windows", 'device_type' => "Desktop"]);
-
-
-
-
-        if ($headers) {
-
-
-
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        }
-
-        #echo "req : ".$u;
-        #echo "\n";
-        #echo "ua : ".$userAgent;
-        #echo "\n";
-        if ($ua != null) {
-            $userAgent = $ua;
         }
 
         curl_setopt($ch, CURLOPT_USERAGENT, $userAgent);
@@ -71,18 +41,33 @@ class crawlController extends Controller
 
 
 
-
     public function crawl()
     {
+        $targ = Target::has('urlpatterns')->where('active', '=', 1)->orderBy('lastseen', 'asc')->first();
+        $this->runcrawl($targ);
+    }
+
+
+
+    
+
+    public function runcrawl($targ,$pages=null)
+    {
+
 
         date_default_timezone_set("Asia/Tehran");
-        $targ = Target::has('urlpatterns')->where('active', '=', 1)->orderBy('lastseen', 'asc')->first();
 
+
+        //$targ = Target::has('urlpatterns')->where('active', '=', 1)->orderBy('lastseen', 'asc')->first();
         $targ->lastseen = date("Y-m-d H:i:s");
         $targ->save();
 
 
-        $pages = $targ->pages->where('status', '=', 0)->first();
+        if ($pages == null) {
+         $pages = $targ->pages->where('status', '=', 0)->first();
+        }
+
+
         $url = null;
 
         if (isset($pages)) {
@@ -90,7 +75,7 @@ class crawlController extends Controller
         }
 
         if (!$url) {
-            // $url = $targ->url;
+          
 
             $now = Carbon::now();
 
@@ -114,6 +99,7 @@ class crawlController extends Controller
         }
 
 
+        $url = trim($url);
 
         $url_parsed = parse_url($url);
 
@@ -219,6 +205,8 @@ class crawlController extends Controller
 
         foreach ($mpd as $hit_url) {
 
+            $hit_url = trim($hit_url);
+
             $isok = false;
 
             foreach ($patts as $pat) {
@@ -281,12 +269,16 @@ class crawlController extends Controller
 
             $regexurl = '.*';
             if ($hitmaker->urlpattern) {
-                $regexurl = $hitmaker->urlpattern;
+
+                preg_match('/!(.+)!.*/',$hitmaker->urlpattern,$m);
+                $regexurl = $m[1];
             }
 
             $regexhtml = '.*';
             if ($hitmaker->htmlpattern) {
-                $regexhtml = $hitmaker->htmlpattern;
+
+                preg_match('/!(.+)!.*/',$hitmaker->htmlpattern,$m);
+                $regexhtml = $m[1];
             }
 
 
