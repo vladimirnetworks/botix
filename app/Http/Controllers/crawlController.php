@@ -107,12 +107,6 @@ class crawlController extends Controller
         }
 
 
-        if (isset($pages_get->id)) {
-            dd($pages->url);
-        } else {
-            dd("not found");
-        }
-
 
 
         $this->runcrawl($targ, $pages);
