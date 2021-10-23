@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\page;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
@@ -35,7 +37,23 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+
+        $now = Carbon::now();
+
+        foreach ($request->toArray() as $hit) {
+            DB::table('pages')->insertOrIgnore([
+                "target_id" => $request->target_id,
+                "url" => $hit,
+                "created_at" => $now,
+                "updated_at"=>$now,
+            ]);
+            $ret[] = $hit;
+        }
+
+       // 
+
+        return $ret;
     }
 
     /**
