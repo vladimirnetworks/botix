@@ -90,6 +90,7 @@ class crawlController extends Controller
         $targ = Target::has('urlpatterns')->where('active', '=', 1)->orderBy('lastseen', 'asc')->first();
 
 
+        
         $patts = $targ->urlpatterns;
 
 
