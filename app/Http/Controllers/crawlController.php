@@ -8,6 +8,7 @@ use App\Models\urlpattern;
 use App\Models\page;
 use App\Models\post;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 use Illuminate\Http\Request;
 use DOMDocument;
@@ -91,9 +92,19 @@ class crawlController extends Controller
         if (!$url) {
             // $url = $targ->url;
 
+            $now = Carbon::now();
+
+
             DB::table('pages')->insertOrIgnore(
 
-                ['url' => $targ->url, 'target_id' => $targ->id]
+                ['url' => $targ->url, 'target_id' => $targ->id
+                
+                ,
+
+                "created_at" => $now,
+                "updated_at"=>$now,
+                
+                ]
 
             );
 
@@ -221,10 +232,15 @@ class crawlController extends Controller
 
                 $ret[] = $hit_url;
                 // page::create(['url' => $hit_url,'target_id'=>$targ->id]);
-
+                $now = Carbon::now();
                 DB::table('pages')->insertOrIgnore(
 
-                    ['url' => $hit_url, 'target_id' => $targ->id]
+                    ['url' => $hit_url, 'target_id' => $targ->id,
+                    
+                    "created_at" => $now,
+                    "updated_at"=>$now,
+
+                    ]
 
                 );
             }
