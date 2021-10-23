@@ -18,12 +18,13 @@ Route::post('/insertlink/{target_id}', 'App\Http\Controllers\PageController@stor
 
 
 Route::get('/crawl', 'App\Http\Controllers\crawlController@crawl');
+Route::get('/crawlsave', 'App\Http\Controllers\crawlController@crawlsave');
 Route::get('/make', 'App\Http\Controllers\crawlController@make');
 
 
 
 // test
-Route::get('/crawlsavetest', 'App\Http\Controllers\crawlController@crawlsavetest');
+
 
 
 
