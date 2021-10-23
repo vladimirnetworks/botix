@@ -92,16 +92,21 @@ class crawlController extends Controller
         foreach ($patts as $pat) {
 
             if ($pat->type == 1) {
-                $pages_get = DB::table('pages')->whereraw('target_id = ' . $targ->id . " and status = 0 and url REGEXP '" . $pat->pattern . "' ")->first();
-                $pages = page::find($pages_get->id);
+                $pages_get = DB::table('pages')->whereraw('target_id = ' . $targ->id . " and status = 0 and url REGEXP '" . $pat->pattern . "' ")->first();         
                 if (isset($pages_get->id)) {
+                    $pages = page::find($pages_get->id);
                     break;
                 }
             }
         }
 
 
-        dd($pages->url);
+        if (isset($pages_get->id)) {
+            dd($pages->url);
+        } else {
+            dd("not found");
+        }
+      
 
 
         $this->runcrawl($targ, $pages);
