@@ -368,6 +368,7 @@ class crawlController extends Controller
                 'target_id' => $pgg->target_id,
                 'maker_id' => $hitmaker->id,
                 'data' => json_encode($res),
+                'url' => $pgg->url,
             ]);
             //
 

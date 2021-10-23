@@ -15,6 +15,7 @@ class post extends Model
         'target_id',
         'maker_id',
         'data',
+        'url'
 
     ];
 }
