@@ -60,7 +60,7 @@ class TargetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $target)
+    public function update(Request $request, Target $target)
     {
         //
 
