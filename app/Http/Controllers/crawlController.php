@@ -9,6 +9,7 @@ use App\Models\page;
 use App\Models\post;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use Sunra\PhpSimple\HtmlDomParser;
 
 use Illuminate\Http\Request;
 use DOMDocument;
