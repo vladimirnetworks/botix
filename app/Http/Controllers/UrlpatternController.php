@@ -31,15 +31,17 @@ class UrlpatternController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Target $target , Request $request)
     {
 
-        $pat = urlpattern::create([
-            'target_id' => $request->target_id,
-            'pattern' => $request->pattern,
-            'savepattern' => $request->savepattern,
-            'type' => $request->type
-        ]);
+
+        $pat = new urlpattern();
+
+        $pat->pattern = $request->pattern;
+        $pat->savepattern = $request->savepattern;
+        $pat->type = $request->type;
+
+        $target->urlpatterns()->save($pat);
 
         return ["data" => $pat];
     }
@@ -97,9 +99,9 @@ class UrlpatternController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($targetidm,$id)
+    public function destroy(Target $target,urlpattern $pattern)
     {
-        $pattx = urlpattern::find($id);
-        return ["data" => $pattx->delete()];
+       
+        return ["data" => $pattern->delete()];
     }
 }
