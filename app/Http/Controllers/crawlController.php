@@ -288,10 +288,15 @@ class crawlController extends Controller
                 DB::table('pages')->insertOrIgnore(
 
                     [
-                        'url' => $hit_url, 'target_id' => $targ->id,
+                        'url' => $hit_url,
+                        'target_id' => $targ->id,
 
                         "created_at" => $now,
                         "updated_at" => $now,
+
+
+                        'parent' => $$pages->id,
+
 
                     ]
 

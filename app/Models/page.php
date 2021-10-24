@@ -12,7 +12,8 @@ class page extends Model
     protected $fillable = [
         'url',
         'html',
-        'target_id'
+        'target_id',
+        'parent',
     ];
 
 
