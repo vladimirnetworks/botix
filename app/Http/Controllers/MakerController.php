@@ -15,7 +15,7 @@ class MakerController extends Controller
      */
     public function index(Target $target)
     {
-       
+
         if (isset($target->makers)) {
             return ["data" => $target->makers];
         } else {
@@ -29,16 +29,18 @@ class MakerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request ,$target_id)
+    public function store(Target $target, Request $request)
     {
-        $pat = maker::create([
-            'target_id' => $request->target_id,
-            'urlpattern' => $request->urlpattern,
-            'htmlpattern' => $request->htmlpattern,
-            'maker' => $request->maker
-        ]);
 
-        return ["data" => $pat];
+        $newmaker = new maker();
+
+        $newmaker->urlpattern = $request->urlpattern;
+        $newmaker->htmlpattern = $request->htmlpattern;
+        $newmaker->maker = $request->maker;
+
+        $target->makers()->save($newmaker);
+
+        return ["data" => $newmaker];
     }
 
     /**
@@ -59,15 +61,15 @@ class MakerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $target_id , $maker_id)
+    public function update(Request $request, Target $target, Maker $maker)
     {
-      
-        $makoo = maker::find($maker_id);
 
-        $makoo->urlpattern = $request->urlpattern;
-        $makoo->htmlpattern = $request->htmlpattern;
-        $makoo->maker = $request->maker;
-        $makoo->active = $request->active;
+
+
+        $maker->urlpattern = $request->urlpattern;
+        $maker->htmlpattern = $request->htmlpattern;
+        $maker->maker = $request->maker;
+        $maker->active = $request->active;
         // $targ->url = $request->url;
         // $targ->save();
 
@@ -75,9 +77,7 @@ class MakerController extends Controller
         // return ["data" => $targ->save()];
 
 
-        return ["data" => $makoo->save()];
-
-
+        return ["data" => $maker->save()];
     }
 
     /**
@@ -86,9 +86,8 @@ class MakerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($targetidm,$id)
+    public function destroy(Target $target,maker $maker)
     {
-        $mak = maker::find($id);
-        return ["data" => $mak->delete()];
+        return ["data" => $maker->delete()];
     }
 }
