@@ -237,8 +237,28 @@ class crawlController extends Controller
         }
 
 
+        $htmlpipe = null;
+
+        foreach ($patts as $pat) {
+
+            if (preg_match($pat->pattern, $url) && $pat->htmlpipe) {
+                 $htmlpipe = $pat->htmlpipe;
+                 break;
+            }
+
+        }
+
+
+        if ($htmlpipe) {
+            $html = $getpage;
+            $html = eval($htmlpipe);
+            $dom->loadHTML($html);
+           
+        } else {
 
         $dom->loadHTML($getpage);
+
+        }
 
         if (isset($pages)) {
             $pages->status = strlen($getpage);
