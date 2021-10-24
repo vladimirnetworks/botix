@@ -318,7 +318,11 @@ class crawlController extends Controller
         }
 
 
-        dd($ret);
+        if (isset($ret)) {
+          dd($ret);
+        } else {
+            dd("done");
+        }
 
 
         return  $mpd;
