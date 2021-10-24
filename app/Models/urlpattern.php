@@ -11,7 +11,8 @@ class urlpattern extends Model
     protected $fillable = [
         'target_id',
         'pattern',
-        'whereParentpattern',
+        'whereParentpattern',  
+        'htmlpipe',
         'type',
         'savepattern'
     ];
