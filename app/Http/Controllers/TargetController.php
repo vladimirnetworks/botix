@@ -45,8 +45,7 @@ class TargetController extends Controller
     public function show(Target $target)
     {
 
-       return ["data" => $target->urlpatterns];
-
+        return ["data" => $target->urlpatterns];
     }
 
     public function patterns(Target $target)
@@ -61,19 +60,19 @@ class TargetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $target)
     {
-                //
-                $targ = Target::find($id);
+        //
 
-                $targ->title = $request->title;
-                $targ->url = $request->url;
-                $targ->active = $request->active;
-                $targ->makeractive = $request->makeractive;
-            
-        
-        
-                return ["data" => $targ->save()];
+
+        $target->title = $request->title;
+        $target->url = $request->url;
+        $target->active = $request->active;
+        $target->makeractive = $request->makeractive;
+
+
+
+        return ["data" => $target->save()];
     }
 
     /**
@@ -82,9 +81,9 @@ class TargetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($target)
     {
-        $targ = Target::find($id);
-        return ["data" => $targ->delete()];
+    
+        return ["data" => $target->delete()];
     }
 }
