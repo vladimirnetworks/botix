@@ -163,7 +163,10 @@ class crawlController extends Controller
         }
 
 
+
         $url = trim($url);
+
+        $parent = $pages->parent;
 
         $url_parsed = parse_url($url);
 
@@ -295,7 +298,7 @@ class crawlController extends Controller
                         "updated_at" => $now,
 
 
-                        'parent' => $$pages->id,
+                        'parent' => $parent,
 
 
                     ]
