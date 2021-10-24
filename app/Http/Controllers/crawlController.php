@@ -169,6 +169,7 @@ class crawlController extends Controller
 
         $parent = $pages->id;
 
+        $parent_url = $url;
         $url_parsed = parse_url($url);
 
 
@@ -183,7 +184,7 @@ class crawlController extends Controller
             $pages->status = -1;
             $pages->save();
 
-           exit;
+            exit;
         }
 
         $patts = $targ->urlpatterns;
@@ -287,7 +288,7 @@ class crawlController extends Controller
 
             foreach ($patts as $pat) {
 
-                if (preg_match($pat->pattern, $hit_url)) {
+                if ($pat->pattern && $pat->whereParentpattern && preg_match($pat->pattern, $hit_url) && preg_match($pat->whereParentpattern, $parent_url)) {
                     $isok = true;
                 }
             }
