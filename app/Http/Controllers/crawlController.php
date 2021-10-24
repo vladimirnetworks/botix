@@ -90,7 +90,7 @@ class crawlController extends Controller
         $targ = Target::has('urlpatterns')->where('active', '=', 1)->orderBy('lastseen', 'asc')->first();
 
 
-        
+
         $patts = $targ->urlpatterns;
 
 
@@ -109,8 +109,9 @@ class crawlController extends Controller
 
 
 
-
-        $this->runcrawl($targ, $pages);
+        if (isset($pages) && isset($targ)) {
+            $this->runcrawl($targ, $pages);
+        }
     }
 
 
@@ -176,6 +177,10 @@ class crawlController extends Controller
         libxml_use_internal_errors(true);
 
         $getpage = crawlController::gett($url);
+
+        if (!$getpage) {
+           exit;
+        }
 
         $patts = $targ->urlpatterns;
 
