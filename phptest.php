@@ -13,9 +13,9 @@ $xx = " return 1;";
 
 // remove !!i
 
-$subj =  " https://www.2nafare.com/asdasd/";
+$subj =  '<h2 class="title"><a>aa</a></h2>        <h2 class="title"><a>bb</a></h2>';
 
-preg_match('!^https:\/\/www\.2nafare\.com\/[a-zA-Z0-9%-]+\/$!',$subj,$m);
+preg_match_all('!<h2 class="title">(.*?)</h2>!',$subj,$m);
 
 print_r($m);
 
