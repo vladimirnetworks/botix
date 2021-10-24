@@ -166,7 +166,7 @@ class crawlController extends Controller
 
         $url = trim($url);
 
-        $parent = $pages->parent;
+        $parent = $pages->id;
 
         $url_parsed = parse_url($url);
 
