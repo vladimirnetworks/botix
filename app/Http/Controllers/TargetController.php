@@ -81,7 +81,7 @@ class TargetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($target)
+    public function destroy(Target $target)
     {
     
         return ["data" => $target->delete()];
