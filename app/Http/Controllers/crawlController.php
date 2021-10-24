@@ -179,6 +179,10 @@ class crawlController extends Controller
         $getpage = crawlController::gett($url);
 
         if (!$getpage) {
+
+            $pages->status = -1;
+            $pages->save();
+
            exit;
         }
 
