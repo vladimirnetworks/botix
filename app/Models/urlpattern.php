@@ -14,7 +14,7 @@ class urlpattern extends Model
         'whereParentpattern',  
         'htmlpipe',
         'type',
-        'savepattern'
+        'savehtmlpipe'
     ];
 
 
