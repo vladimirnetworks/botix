@@ -18,4 +18,4 @@ $subj =  '<h2 class="title"><a>aa</a></h2>        <h2 class="title"><a>bb</a></h
 preg_match_all('!<h2 class="title">(.*?)</h2>!',$subj,$m);
 
 print_r($m);
-
+//
