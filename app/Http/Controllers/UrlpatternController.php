@@ -38,7 +38,7 @@ class UrlpatternController extends Controller
         $pat = new urlpattern();
 
         $pat->pattern = $request->pattern;
-        $pat->savepattern = $request->savepattern;
+        $pat->savehtmlpipe = $request->savehtmlpipe;
         $pat->type = $request->type;
 
         $pat->whereParentpattern = $request->whereParentpattern;
@@ -81,7 +81,7 @@ class UrlpatternController extends Controller
 
         $pattern->pattern = $request->pattern;
         $pattern->type = $request->type;
-        $pattern->savepattern = $request->savepattern;
+        $pattern->savehtmlpipe = $request->savehtmlpipe;
         $pattern->whereParentpattern = $request->whereParentpattern;
         $pattern->htmlpipe = $request->htmlpipe;
 
