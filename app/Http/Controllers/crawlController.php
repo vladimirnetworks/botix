@@ -199,8 +199,14 @@ class crawlController extends Controller
 
                 $saveisok = true;
 
-                if ($pat->savepattern) {
+                if ($pat->savehtmlpipe) {
 
+                    $html = $getpage;
+                    $getpage = eval($pat->savehtmlpipe);
+                }
+
+                if ($pat->savepattern) {
+                    /*
                     $allsavepat = explode("\n", trim($pat->savepattern));
 
 
@@ -222,6 +228,7 @@ class crawlController extends Controller
                             }
                         }
                     }
+                    */
                 }
 
                 break;
@@ -230,11 +237,13 @@ class crawlController extends Controller
 
         if ($saveisok) {
 
-            if (isset($retmatch)) {
+            /*if (isset($retmatch)) {
                 $pages->html = implode(" ", $retmatch);
             } else {
                 $pages->html = $getpage;
-            }
+            }*/
+
+            $pages->html = $getpage;
         }
 
 
@@ -243,10 +252,9 @@ class crawlController extends Controller
         foreach ($patts as $pat) {
 
             if (preg_match($pat->pattern, $url) && $pat->htmlpipe) {
-                 $htmlpipe = $pat->htmlpipe;
-                 break;
+                $htmlpipe = $pat->htmlpipe;
+                break;
             }
-
         }
 
 
@@ -254,11 +262,9 @@ class crawlController extends Controller
             $html = $getpage;
             $html = eval($htmlpipe);
             $dom->loadHTML($html);
-           
         } else {
 
-        $dom->loadHTML($getpage);
-
+            $dom->loadHTML($getpage);
         }
 
         if (isset($pages)) {
@@ -340,7 +346,7 @@ class crawlController extends Controller
 
 
         if (isset($ret)) {
-          dd($ret);
+            dd($ret);
         } else {
             dd("done");
         }
