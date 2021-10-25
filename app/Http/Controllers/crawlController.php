@@ -346,11 +346,12 @@ class crawlController extends Controller
 
 
         if (isset($ret)) {
-            dd($ret);
+            //dd($ret);
         } else {
-            dd("done");
+            //dd("done");
         }
 
+        exit;
 
         return  $mpd;
     }
