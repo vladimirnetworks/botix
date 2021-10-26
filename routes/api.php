@@ -25,7 +25,7 @@ Route::get('/make', 'App\Http\Controllers\crawlController@make');
 
 // test
 
-
+Route::get('/test', 'App\Http\Controllers\testcontroller@testit');
 
 
 
