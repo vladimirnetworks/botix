@@ -13,7 +13,9 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.6",
-        "sunra/php-simple-html-dom-parser": "^1.5"
+        "sunra/php-simple-html-dom-parser": "^1.5",
+        "vladimirnetworks/bencurl": "^1.0",
+        "vladimirnetworks/shd": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
