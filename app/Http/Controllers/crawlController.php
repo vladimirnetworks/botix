@@ -385,6 +385,7 @@ class crawlController extends Controller
 
             //
             $html = $pgg->html;
+            $url = $pgg->url;
             $res = eval($hitmaker->maker . ";");
 
             post::create([
