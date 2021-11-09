@@ -230,10 +230,10 @@ class crawlController extends Controller
         if ($htmlpipe) {
             $html = $getpage;
             $html = eval($htmlpipe);
-            $dom->loadHTML('<?xml encoding="utf-8" ?>'.$html);
+            $dom->loadHTML('<?xml encoding="utf-8" ?>' . $html);
         } else {
 
-            $dom->loadHTML('<?xml encoding="utf-8" ?>'.$getpage);
+            $dom->loadHTML('<?xml encoding="utf-8" ?>' . $getpage);
         }
 
         if (isset($pages)) {
@@ -273,46 +273,50 @@ class crawlController extends Controller
             $mpd[] = $getedur;
         }
 
-        $mpd = array_unique($mpd);
+
+        if (isset($mpd)) {
 
 
-        foreach ($mpd as $hit_url) {
+            $mpd = array_unique($mpd);
 
-            $hit_url = trim($hit_url);
 
-            $isok = false;
+            foreach ($mpd as $hit_url) {
 
-            foreach ($patts as $pat) {
+                $hit_url = trim($hit_url);
 
-                if ($pat->pattern && $pat->whereParentpattern && preg_match($pat->pattern, $hit_url) && preg_match($pat->whereParentpattern, $parent_url)) {
-                    $isok = true;
+                $isok = false;
+
+                foreach ($patts as $pat) {
+
+                    if ($pat->pattern && $pat->whereParentpattern && preg_match($pat->pattern, $hit_url) && preg_match($pat->whereParentpattern, $parent_url)) {
+                        $isok = true;
+                    }
+                }
+
+                if ($isok) {
+
+                    $ret[] = $hit_url;
+                    // page::create(['url' => $hit_url,'target_id'=>$targ->id]);
+                    $now = Carbon::now();
+                    DB::table('pages')->insertOrIgnore(
+
+                        [
+                            'url' => $hit_url,
+                            'target_id' => $targ->id,
+
+                            "created_at" => $now,
+                            "updated_at" => $now,
+
+
+                            'parent' => $parent,
+
+
+                        ]
+
+                    );
                 }
             }
-
-            if ($isok) {
-
-                $ret[] = $hit_url;
-                // page::create(['url' => $hit_url,'target_id'=>$targ->id]);
-                $now = Carbon::now();
-                DB::table('pages')->insertOrIgnore(
-
-                    [
-                        'url' => $hit_url,
-                        'target_id' => $targ->id,
-
-                        "created_at" => $now,
-                        "updated_at" => $now,
-
-
-                        'parent' => $parent,
-
-
-                    ]
-
-                );
-            }
         }
-
 
         if (isset($ret)) {
             //dd($ret);
