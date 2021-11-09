@@ -248,7 +248,7 @@ class crawlController extends Controller
 
         foreach ($anchors as $node) {
 
-            $href = $node->attr['href'];
+            $href = $node->href;
 
             $href_parsed = parse_url($href);
 
