@@ -230,25 +230,23 @@ class crawlController extends Controller
         if ($htmlpipe) {
             $html = $getpage;
             $html = eval($htmlpipe);
-            $shddom = shd::str_get_html($html);
+            $dom->loadHTML($html);
         } else {
-            $shddom = shd::str_get_html($getpage);
+
+            $dom->loadHTML($getpage);
         }
-
-
 
         if (isset($pages)) {
             $pages->status = strlen($getpage);
             $pages->save();
         }
 
+        $htmlNodes = $dom->getElementsByTagName('a');
 
 
-        $anchors = $shddom->find('a');
+        foreach ($htmlNodes as $node) {
 
-        foreach ($anchors as $node) {
-
-            $href = $node->href;
+            $href = $node->getAttribute('href');
 
             $href_parsed = parse_url($href);
 
