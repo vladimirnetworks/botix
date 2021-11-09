@@ -404,7 +404,7 @@ class crawlController extends Controller
             ]);
 
 
-            dd($pgg);
+          
         }
 
 
