@@ -230,10 +230,10 @@ class crawlController extends Controller
         if ($htmlpipe) {
             $html = $getpage;
             $html = eval($htmlpipe);
-            $dom->loadHTML($html);
+            $dom->loadHTML('<?xml encoding="utf-8" ?>'.$html);
         } else {
 
-            $dom->loadHTML($getpage);
+            $dom->loadHTML('<?xml encoding="utf-8" ?>'.$getpage);
         }
 
         if (isset($pages)) {
