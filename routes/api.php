@@ -29,8 +29,6 @@ Route::get('/make', 'App\Http\Controllers\crawlController@make');
 
 
 
-
-
 /*
 Route::prefix("targets")->group(function () {
 

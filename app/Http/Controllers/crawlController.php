@@ -12,6 +12,7 @@ use Illuminate\Support\Carbon;
 
 use Illuminate\Http\Request;
 use DOMDocument;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 use vladimirnetworks\curl\bencurl;
 use vladimirnetworks\htmlparser\shd;
 
@@ -411,4 +412,7 @@ class crawlController extends Controller
 
         return null;
     }
+
+
+
 }
