@@ -16,16 +16,9 @@ class maker extends Model
         'active',
         'urlpattern',
         'htmlpattern',
-        'maker', /*
-        
-        return [
-
-'title'=>"aaa",
-'text'=>"bbb"
-
-];
-        
-        */  
+        'maker', 
+        'savetype', 
+        'remoteapi', 
     ];
 
 

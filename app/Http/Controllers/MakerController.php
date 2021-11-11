@@ -37,6 +37,8 @@ class MakerController extends Controller
         $newmaker->urlpattern = $request->urlpattern;
         $newmaker->htmlpattern = $request->htmlpattern;
         $newmaker->maker = $request->maker;
+        $newmaker->savetype = $request->savetype;
+        $newmaker->remoteapi = $request->remoteapi;
 
         $target->makers()->save($newmaker);
 
@@ -70,6 +72,8 @@ class MakerController extends Controller
         $maker->htmlpattern = $request->htmlpattern;
         $maker->maker = $request->maker;
         $maker->active = $request->active;
+        $maker->savetype = $request->savetype;
+        $maker->remoteapi = $request->remoteapi;
         // $targ->url = $request->url;
         // $targ->save();
 

@@ -389,12 +389,22 @@ class crawlController extends Controller
             $url = $pgg->url;
             $res = eval($hitmaker->maker . ";");
 
-            post::create([
-                'target_id' => $pgg->target_id,
-                'maker_id' => $hitmaker->id,
-                'data' => json_encode($res),
-                'url' => $pgg->url,
-            ]);
+            if ($hitmaker->savetype == 0) {
+
+                post::create([
+                    'target_id' => $pgg->target_id,
+                    'maker_id' => $hitmaker->id,
+                    'data' => json_encode($res),
+                    'url' => $pgg->url,
+                ]);
+            }
+
+            if ($hitmaker->savetype == 1) {
+
+                $send = new bencurl($hitmaker->remoteapi);
+                $send->post(json_encode($res));
+                $send->download();
+            }
             //
 
 
@@ -403,16 +413,10 @@ class crawlController extends Controller
                 'maker_id' => $hitmaker->id,
                 'url' => $pgg->url,
             ]);
-
-
-          
         }
 
 
 
         return null;
     }
-
-
-
 }
