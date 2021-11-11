@@ -404,7 +404,7 @@ class crawlController extends Controller
                 $send = new bencurl($hitmaker->remoteapi);
                 $send->bencurl_setopt(CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
                 $send->post(json_encode($res));
-                $send->download();
+                echo $send->download();
             }
             //
 
